@@ -4,4 +4,5 @@
     <string name="Location">Location</string>
     <string name="weatherLocation">Location</string>
     <string name="Condition">Condition</string>
+    <string name="newsCaption">Duyurular</string>
 </resources>

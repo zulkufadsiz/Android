@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,12 +20,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.zulkuf.sdukampus.NewScreen;
 import com.example.zulkuf.sdukampus.R;
 import com.example.zulkuf.sdukampus.data.Channel;
 import com.example.zulkuf.sdukampus.data.Item;
 import com.example.zulkuf.sdukampus.data.News;
 import com.example.zulkuf.sdukampus.service.WeatherServiceCallback;
 import com.example.zulkuf.sdukampus.service.YahooWeatherService;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -34,13 +37,17 @@ import java.util.List;
 
 public class MainMenuFragment extends Fragment implements WeatherServiceCallback {
     //News
-    private String TAG = MainMenuFragment.class.getSimpleName();
-    private Context mContext = getActivity();
+    private String TAG = NewScreen.class.getSimpleName();
+    private Context mContext;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
+    private MyNewsListAdapter myNewsListAdapter;
+
+
     private List<News> mNewsList;
+
 
 
     //Weather
@@ -56,6 +63,7 @@ public class MainMenuFragment extends Fragment implements WeatherServiceCallback
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         //Ekran oluşturulur.
         View view = inflater.inflate(R.layout.mainmenu_fragment, container, false);
+        mContext = container.getContext();
         return view;
     }
 
@@ -77,6 +85,10 @@ public class MainMenuFragment extends Fragment implements WeatherServiceCallback
         dialog.show();
 
         service.refreshWeather("isparta, tr");
+
+        getListItems();
+        setSwipeRefreshLayout();
+        setRecyclerView();
 
 
 
@@ -103,6 +115,100 @@ public class MainMenuFragment extends Fragment implements WeatherServiceCallback
         //Servis hata mesajı.
         dialog.hide();
         Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+    }
+
+    /*********************************************************
+     * NEWS START
+     */
+
+    private void getListItems(){
+        mNewsList = News.createNewsList();
+    }
+
+    private void setSwipeRefreshLayout(){
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshLayout);
+
+        mSwipeRefreshLayout.setColorSchemeResources(
+                R.color.refresh_progress_1,
+                R.color.refresh_progress_2,
+                R.color.refresh_progress_3
+        );
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //Refresh işlemi
+                getNewCity();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+    private void getNewCity(){
+        News news6 = new News();
+        news6.setCaption("Konferans: Hatıralarla Necmettin Erbakan");
+        news6.setDescription("Süleyman Demirel Üniversitesi İdealist Gençlik Topluluğu tarafından “Hatıralarla Necmettin Erbakan”" +
+                " konulu bir konferans düzenleniyor. 10 Mart Cuma günü saat 15.00’te Hukuk Fakültesi Konferans Salonu’nda gerçekleştirilecek" +
+                " olan konferans, Siyasetçi Fethullah Erbaş tarafından verilecek. ");
+        news6.setImage("https://pbs.twimg.com/profile_images/573053038266470400/XnFvteTs.jpeg");
+
+        mNewsList.add(0,news6);
+
+        myNewsListAdapter.notifyItemInserted(0);
+        mLinearLayoutManager.scrollToPosition(0);
+    }
+
+    private void setRecyclerView(){
+        mRecyclerView = (RecyclerView)getActivity().findViewById(R.id.recyclerView);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setHasFixedSize(true);
+        mLinearLayoutManager = new LinearLayoutManager(mContext);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        myNewsListAdapter = new MyNewsListAdapter();
+        mRecyclerView.setAdapter(myNewsListAdapter);
+    }
+
+
+    private class MyNewsListAdapter extends RecyclerView.Adapter<MyNewsListAdapter.MyNewsHolder>{
+        @Override
+        public MyNewsListAdapter.MyNewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.custom_recycler_view_announcement,parent,false);
+            return new MyNewsListAdapter.MyNewsHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MyNewsListAdapter.MyNewsHolder holder, int position) {
+            News news = mNewsList.get(position);
+
+            holder.tvNewsCaption.setText(news.getCaption());
+            holder.tvNewsDescription.setText(news.getDescription());
+
+            //Image Kısmı
+            Picasso.with(mContext)
+                    .load(news.getImage())
+                    .resize(300, 300)
+                    .centerCrop()
+                    .into(holder.ivNewsImage);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mNewsList.size();
+        }
+
+        public class MyNewsHolder extends RecyclerView.ViewHolder{
+            ImageView ivNewsImage;
+            TextView tvNewsCaption,  tvNewsDescription;
+
+            public MyNewsHolder(View view) {
+                super(view);
+                ivNewsImage = (ImageView) view.findViewById(R.id.ivNewsImage);
+
+                tvNewsCaption = (TextView) view.findViewById(R.id.tvNewsCaption);
+                tvNewsDescription = (TextView) view.findViewById(R.id.tvNewsDescription);
+
+            }
+        }
     }
 
 }

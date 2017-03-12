@@ -44,20 +44,29 @@
         android:layout_toEndOf="@+id/weatherIcon" />
 
 </RelativeLayout>
+    <TextView
+        android:id="@+id/captionNews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/newsCaption"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:padding = "10dp"
+        android:layout_below="@+id/weather" />
 <RelativeLayout
     android:id="@+id/newsRelative"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/weather">
+    android:layout_below="@+id/captionNews">
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/newsSwipeRefresh"
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/newsRecyclerView"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
+
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
 
