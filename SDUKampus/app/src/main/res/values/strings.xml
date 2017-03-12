@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SDU Kampus</string>
+    <string name="Temperature">Temperature</string>
+    <string name="Location">Location</string>
+    <string name="weatherLocation">Location</string>
+    <string name="Condition">Condition</string>
+</resources>
