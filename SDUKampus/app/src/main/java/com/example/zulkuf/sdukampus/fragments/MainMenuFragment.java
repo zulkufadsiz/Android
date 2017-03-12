@@ -138,12 +138,12 @@ public class MainMenuFragment extends Fragment implements WeatherServiceCallback
             @Override
             public void onRefresh() {
                 //Refresh işlemi
-                getNewCity();
+                getCurrentNews();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
-    private void getNewCity(){
+    private void getCurrentNews(){
         News news6 = new News();
         news6.setCaption("Konferans: Hatıralarla Necmettin Erbakan");
         news6.setDescription("Süleyman Demirel Üniversitesi İdealist Gençlik Topluluğu tarafından “Hatıralarla Necmettin Erbakan”" +

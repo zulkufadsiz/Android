@@ -2,7 +2,9 @@ package com.example.zulkuf.sdukampus;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +22,10 @@ public class Login extends Activity {
     //Nesneler tanımlandı.
     private EditText eMail,password;
     private Button login,signUp;
-    //private TextView signUp;
+
+    public static final String SP = "preference";
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +38,21 @@ public class Login extends Activity {
         login = (Button)findViewById(R.id.btnLogin);
         signUp = (Button) findViewById(R.id.btnSignUp);
 
+        eMail.getText().toString();
+
+
         //Login butonuna tıklanma aksiyonu
        login.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               if (eMail.getText().toString().equals("1") && password.getText().toString().equals("1")){
+               if (eMail.getText().toString().equals("2") && password.getText().toString().equals("2")){
+                   //Shared Preference Create
+                   SharedPreferences preferences = getSharedPreferences(SP,0);
+                   SharedPreferences.Editor editor = preferences.edit();
+                    //Keep usermail and pass
+                   editor.putString("userMessage", eMail.getText().toString());
+                   editor.commit();
+
                    Intent intent = new Intent(Login.this,Home.class);
                    startActivity(intent);
                }else{
