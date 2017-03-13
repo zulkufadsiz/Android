@@ -26,7 +26,14 @@
         </activity>
         <activity android:name=".Home">
             <intent-filter>
-                <action android:name="android.intent.action.NEWSCREEN" />
+                <action android:name="android.intent.action.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ListViewDenemesi">
+            <intent-filter>
+                <action android:name="android.intent.action.LISTVIEWDENEMESI" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

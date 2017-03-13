@@ -5,4 +5,9 @@
     <string name="weatherLocation">Location</string>
     <string name="Condition">Condition</string>
     <string name="newsCaption">Duyurular</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="busNumber">Number</string>
+    <string name="busTime">BusTime</string>
+    <string name="busRoute">BusRoute</string>
 </resources>
