@@ -1,8 +1,9 @@
 package com.example.zulkuf.sdukampus.fragments;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -12,9 +13,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,11 +26,12 @@ import android.widget.Toast;
 import com.example.zulkuf.sdukampus.NewScreen;
 import com.example.zulkuf.sdukampus.R;
 import com.example.zulkuf.sdukampus.data.Channel;
-import com.example.zulkuf.sdukampus.data.Item;
+import com.example.zulkuf.sdukampus.data.Metric;
 import com.example.zulkuf.sdukampus.data.News;
 import com.example.zulkuf.sdukampus.service.WeatherServiceCallback;
 import com.example.zulkuf.sdukampus.service.YahooWeatherService;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -53,8 +57,9 @@ public class MainMenuFragment extends Fragment implements WeatherServiceCallback
     //Weather
     private ImageView weatherImageIcon;
     private  TextView temperature;
-    private  TextView condition;
+    private  TextView weatherText;
     private  TextView location;
+    private RelativeLayout weather;
 
     private YahooWeatherService service;
     private ProgressDialog dialog;
@@ -74,8 +79,10 @@ public class MainMenuFragment extends Fragment implements WeatherServiceCallback
         //Componentler çağırılır.
         weatherImageIcon = (ImageView)view.findViewById(R.id.weatherIcon);
         temperature  = (TextView)view.findViewById(R.id.weatherTemperature);
-        condition  = (TextView)view.findViewById(R.id.weatherCondition);
+        weatherText  = (TextView)view.findViewById(R.id.weatherCondition);
         location  = (TextView)view.findViewById(R.id.weatherLocation);
+        weather = (RelativeLayout)view.findViewById(R.id.weather);
+
 
         service = new YahooWeatherService(this);
 
@@ -97,24 +104,47 @@ public class MainMenuFragment extends Fragment implements WeatherServiceCallback
     @Override
     public void serviceSuccess(Channel channel) {
             dialog.hide();
-        Item item = channel.getItem();
-        int reSourceId = getResources().getIdentifier("@drawable/icon_" + item.getCondition().getCode(),null,getActivity().getPackageName());
+        Metric metric = channel.getMetric();
+        int reSourceId = getResources().getIdentifier("@drawable/icon_" + channel.getWeatherIcon(),null,getActivity().getPackageName());
         @SuppressWarnings("deprecation")
         //Hava Durumu ikonu atandı
         Drawable weatherIconDrawable = getResources().getDrawable(reSourceId);
         weatherImageIcon.setImageDrawable(weatherIconDrawable);
 
         //Sıcaklık durum ve il değerleri atandı.
-        temperature.setText(item.getCondition().getTemperature() + "\u00B0"+channel.getUnits().getTemperature());
-        condition.setText(item.getCondition().getDescription());
-        location.setText(channel.getLocation().getCity());
-    }
+        temperature.setText(metric.getTemperature() + "\u00B0" + metric.getUnit());
+        weatherText.setText(channel.getWeatherText());
+        location.setText("Isparta");
+        //Image Kısmı
+        Picasso.with(getContext())
+                .load(channel.getPhotos().getBackgroundImage())
+                .resize(100,100)
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        weather.setBackground(new BitmapDrawable(getContext().getResources(),bitmap));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        Log.d("IMAGE","Weather background image loading failed");
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        Log.d("IMAGE","Weather background image prepare loading");
+                    }
+                });
+
+
+
+}
 
     @Override
     public void serviceFailure(Exception exception) {
         //Servis hata mesajı.
         dialog.hide();
-        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_LONG).show();
     }
 
     /*********************************************************

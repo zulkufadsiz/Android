@@ -1,5 +1,8 @@
 package com.example.zulkuf.sdukampus.data;
 
+import android.util.Log;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -7,33 +10,37 @@ import org.json.JSONObject;
  */
 
 public class Channel implements JSONPopulator {
-    private Item item;
-    private Units units;
-    private Location location;
+    private Metric metric;
+    private Photos photos;
+    private String weatherText;
+    private int weatherIcon;
 
-    public Item getItem() {
-        return item;
+    public String getWeatherText() {
+        return weatherText;
     }
 
-    public Units getUnits() {
-        return units;
+    public int getWeatherIcon() {
+        return weatherIcon;
     }
 
-    public Location getLocation() {
-        return location;
+    public Metric getMetric() {
+        return metric;
+    }
+
+    public Photos getPhotos() {
+        return photos;
     }
 
     @Override
     public void populate(JSONObject data) {
+        Log.e("CHANNEL",data.toString());
+        metric = new Metric();
+        metric.populate(data.optJSONObject("Temperature").optJSONObject("Metric"));
 
-        units = new Units();
-        units.populate(data.optJSONObject("units"));
+        weatherText = data.optString("WeatherText");
+        weatherIcon = data.optInt("WeatherIcon");
 
-        item = new Item();
-        item.populate(data.optJSONObject("item"));
-
-        location = new Location();
-        location.populate(data.optJSONObject("location"));
-
+            photos = new Photos();
+            photos.populate(data);
     }
 }

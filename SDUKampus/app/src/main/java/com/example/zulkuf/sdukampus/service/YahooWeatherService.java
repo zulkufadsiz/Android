@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.zulkuf.sdukampus.data.Channel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,6 +16,8 @@ import java.io.InputStreamReader;
 
 import java.net.URL;
 import java.net.URLConnection;
+
+import static android.R.id.input;
 
 /**
  * Created by zulkuf on 09/03/17.
@@ -41,8 +44,9 @@ public class YahooWeatherService {
             @Override
             protected String doInBackground(String... strings) {
 
-                String YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\") and u='c'",strings[0]);
-                String endpoint  = String.format("https://query.yahooapis.com/v1/public/yql?q=%s&format=json", Uri.encode(YQL));
+                //String YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\") and u='c'",strings[0]);
+                //String endpoint  = String.format("https://query.yahooapis.com/v1/public/yql?q=%s&format=json", Uri.encode(YQL));
+                String endpoint = "http://apidev.accuweather.com/currentconditions/v1/318032.json?language=tr-tr&apikey=hoArfRosT1215&getphotos=true";
 
                 Log.i("HATA",endpoint);
 
@@ -59,9 +63,10 @@ public class YahooWeatherService {
                     String line;
                         //Service ten gelen değer boş değil ise
                     while ((line = reader.readLine()) != null ){
-                        result.append(line);
-                    }
+                        result.append(line.replaceAll("\\[\\{\"LocalObservationDateTime", "\\{\"LocalObservationDateTime").replaceAll("lang=tr-tr\"\\}\\]","lang=tr-tr\"\\}"));
+                        Log.i("KONTROL",result.toString());
 
+                    }
                     return result.toString();
                 } catch (Exception e) {
                     error = e;
@@ -80,24 +85,29 @@ public class YahooWeatherService {
                     //JSON Nesnesi oluştur.
                     JSONObject data  = new JSONObject(s);
                     //Web service query dizinine ulaş
-                    JSONObject queryResults = data.optJSONObject("query");
                     //Query dizininin alt sizininden count a ulaş
-                    int count = queryResults.optInt("count");
-                    if (count == 0){
+                    Log.i("DATAKONTROL",data.toString());
+                    String count = data.optString("WeatherIcon");
+
+
+                    if (count == null){
+                        Log.i("COUNT",count.toString());
                         callback.serviceFailure( new LocationWeatherException("Konum bilgisi bulunamadı "+location));
                         return;
                     }
+
                     //Channel sınıfından referans üret
                     Channel channel = new Channel();
                     //Channel classına channel parametresini gönder.
-                    channel.populate(queryResults.getJSONObject("results").optJSONObject("channel"));
+                    Log.d("COME",data.toString());
+                    channel.populate(data);
                     callback.serviceSuccess(channel);
 
                 } catch (JSONException e) {
                     callback.serviceFailure(e);
                 }
             }
-        }.execute(location);
+        }.execute();
     }
 
     public class LocationWeatherException extends Exception {

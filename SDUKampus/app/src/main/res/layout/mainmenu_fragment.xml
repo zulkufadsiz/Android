@@ -20,9 +20,9 @@
         android:layout_height="wrap_content"
         android:text="@string/Temperature"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding = "10dp"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/weatherIcon"
-        android:padding = "10dp"/>
+        android:layout_alignStart="@+id/weatherLocation" />
     <TextView
         android:id="@+id/weatherCondition"
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:padding = "10dp"
         android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/weatherLocation" />
+        android:layout_centerHorizontal="true" />
     <TextView
         android:id="@+id/weatherLocation"
         android:layout_width="wrap_content"
@@ -39,9 +39,8 @@
         android:text="@string/weatherLocation"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:padding = "10dp"
-        android:layout_marginStart="12dp"
         android:layout_below="@+id/weatherTemperature"
-        android:layout_toEndOf="@+id/weatherIcon" />
+        android:layout_alignEnd="@+id/weatherCondition" />
 
 </RelativeLayout>
     <TextView
