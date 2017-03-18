@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 
-import com.example.zulkuf.sdukampus.PageAdapter;
+import com.example.zulkuf.sdukampus.PageAdapterDays;
 import com.example.zulkuf.sdukampus.R;
 
 /**
@@ -42,7 +42,7 @@ public class PoolFragment extends Fragment{
         tabLayout.addTab(tabLayout.newTab().setText("Pazar"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewPager viewPager  = (ViewPager)view.findViewById(R.id.pool_Pager);
-        final PageAdapter adapter = new PageAdapter
+        final PageAdapterDays adapter = new PageAdapterDays
                 (getFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ import com.example.zulkuf.sdukampus.data.Channel;
 import com.example.zulkuf.sdukampus.data.Metric;
 import com.example.zulkuf.sdukampus.data.News;
 import com.example.zulkuf.sdukampus.service.WeatherServiceCallback;
-import com.example.zulkuf.sdukampus.service.YahooWeatherService;
+import com.example.zulkuf.sdukampus.service.WeatherService;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -61,7 +60,7 @@ public class MainMenuFragment extends Fragment implements WeatherServiceCallback
     private  TextView location;
     private RelativeLayout weather;
 
-    private YahooWeatherService service;
+    private WeatherService service;
     private ProgressDialog dialog;
     @Nullable
     @Override
@@ -84,7 +83,7 @@ public class MainMenuFragment extends Fragment implements WeatherServiceCallback
         weather = (RelativeLayout)view.findViewById(R.id.weather);
 
 
-        service = new YahooWeatherService(this);
+        service = new WeatherService(this);
 
         //Progress Dialog oluşturuldu.
         dialog = new ProgressDialog(getActivity());
@@ -118,6 +117,7 @@ public class MainMenuFragment extends Fragment implements WeatherServiceCallback
         //Image Kısmı
         Picasso.with(getContext())
                 .load(channel.getPhotos().getBackgroundImage())
+                .centerCrop()
                 .resize(100,100)
                 .into(new Target() {
                     @Override

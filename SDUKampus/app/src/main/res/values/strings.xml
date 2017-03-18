@@ -10,4 +10,7 @@
     <string name="busNumber">Number</string>
     <string name="busTime">BusTime</string>
     <string name="busRoute">BusRoute</string>
+    <string name="poolTime">PoolTime</string>
+    <string name="poolGender">PoolGender</string>
+    <string name="poolClean">Temizlik Bakım Günü</string>
 </resources>

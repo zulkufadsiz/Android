@@ -37,6 +37,7 @@ public  class PageAdapter extends FragmentStatePagerAdapter {
             case 3:
                 PoolFragment tab4 = new PoolFragment();
                 return tab4;
+
             default:
                 return null;
 
