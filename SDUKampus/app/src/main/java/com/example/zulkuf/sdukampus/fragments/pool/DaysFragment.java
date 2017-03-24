@@ -90,7 +90,7 @@ public class DaysFragment extends Fragment implements DayKey {
 
                     break;
                 case 1:
-                     poolGender = list.getTuesday();
+                    poolGender = list.getTuesday();
                     tvPoolGender.setText(poolGender[position]);
                     tvPoolTime.setText(poolTime[position]);
                     ivValue = poolGender[position];
