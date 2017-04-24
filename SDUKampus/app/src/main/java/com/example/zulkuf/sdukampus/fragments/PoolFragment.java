@@ -1,5 +1,6 @@
 package com.example.zulkuf.sdukampus.fragments;
 
+import android.content.res.ColorStateList;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ public class PoolFragment extends Fragment{
         tabLayout.addTab(tabLayout.newTab().setText("Cuma"));
         tabLayout.addTab(tabLayout.newTab().setText("Cumartesi"));
         tabLayout.addTab(tabLayout.newTab().setText("Pazar"));
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.sduYesil));
+        tabLayout.setTabTextColors(ColorStateList.valueOf(getResources().getColor(R.color.sduBeyaz)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewPager viewPager  = (ViewPager)view.findViewById(R.id.pool_Pager);
         final PageAdapterDays adapter = new PageAdapterDays
