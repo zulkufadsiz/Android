@@ -1,5 +1,7 @@
 package com.example.zulkuf.sdukampus;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,13 +29,18 @@ public class Home extends AppCompatActivity {
         mToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setIcon(R.drawable.logo2);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.sduYesil)));
         //----------------- Navigation Bar Finish --------------
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home_black_24dp));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_directions_bus_black_24dp));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_restaurant_black_24dp));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_pool_black_24dp));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home_light));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_direction_light));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_restaurant_light));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_pool_light));
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.sduYesil));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager  = (ViewPager)findViewById(R.id.pager);
