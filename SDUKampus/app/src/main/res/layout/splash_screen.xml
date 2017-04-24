@@ -6,7 +6,14 @@
         android:id="@+id/splashImage"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/logo1"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="60dp"/>
+    <ImageView
+        android:id="@+id/splashImage2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/logo2"
         android:layout_gravity="center_horizontal"
         android:paddingTop="60dp"/>
 </LinearLayout>
