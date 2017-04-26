@@ -31,9 +31,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ListViewDenemesi">
+        <activity android:name=".BusItemClickActivity">
             <intent-filter>
-                <action android:name="android.intent.action.LISTVIEWDENEMESI" />
+                <action android:name="android.intent.action.BUSITEMLISTACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

@@ -6,4 +6,5 @@ package com.example.zulkuf.sdukampus.fragments;
 
 public interface DayKey {
     void dayKey(int key);
+
 }

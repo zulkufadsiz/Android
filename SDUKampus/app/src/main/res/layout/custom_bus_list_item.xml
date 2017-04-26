@@ -29,7 +29,8 @@
         android:text="@string/busTime"
         android:layout_toRightOf="@+id/busImageFrame"
         android:layout_alignParentTop="true"
-        android:paddingTop="5dp"/>
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"/>
 
     <TextView
         android:id="@+id/tvBusRoute"
@@ -37,7 +38,9 @@
         android:layout_height="wrap_content"
         android:text="@string/busRoute"
         android:layout_toRightOf="@+id/busImageFrame"
-        android:paddingTop="5dp"
-        android:layout_below="@+id/tvBusTime"/>
+        android:paddingTop="15dp"
+        android:layout_below="@+id/tvBusTime"
+        android:singleLine="true"
+        android:paddingRight="10dp"/>
 
 </RelativeLayout>

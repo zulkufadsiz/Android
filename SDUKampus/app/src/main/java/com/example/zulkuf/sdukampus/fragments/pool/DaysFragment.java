@@ -56,6 +56,7 @@ public class DaysFragment extends Fragment implements DayKey {
       day =key;
     }
 
+
     public class PoolArrayAdapter extends ArrayAdapter<String>{
         public PoolArrayAdapter(@NonNull Context context) {
 
