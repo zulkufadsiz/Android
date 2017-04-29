@@ -45,17 +45,17 @@ public class BusItemClickActivity extends AppCompatActivity {
 
             TextView tv = new TextView(this);
             tv.setId(i);
-
+            tv.setText("* " + routes[i]);
             RelativeLayout.LayoutParams lp = new RelativeLayout
                     .LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-            if (i >= 0) {
+            if (i > 0) {
                 lp.addRule(RelativeLayout.BELOW, i - 1);
             }
             tv.setPadding(50,30,0,0);
             tv.setLayoutParams(lp);
-            tv.setText("* " + routes[i]);
+
             relative.addView(tv);
 
         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.zulkuf.sdukampus.fragments.PoolFragment">
+    tools:context="com.example.zulkuf.sdukampus.fragments.RefectoryFragment">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/days_TabR"
@@ -19,6 +19,6 @@
         android:id="@+id/refactory_Pager"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/days_Tab"/>
+        android:layout_below="@id/days_TabR"/>
 
 </RelativeLayout>

@@ -28,7 +28,6 @@ import com.example.zulkuf.sdukampus.fragments.DayKey;
  */
 
 public class DaysFragment extends Fragment implements DayKey {
-    TabLayout tabLayout;
     int day;
     DaysList list  = new DaysList();
     ListView listView;
